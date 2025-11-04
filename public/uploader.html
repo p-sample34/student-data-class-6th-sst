@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Mark Uploader</title>
+  <link rel="stylesheet" href="style.css">
+</head>
+<body>
+  <h1 style="text-align:center;">📊 Mark Uploader Panel</h1>
+  <div class="upload-container">
+    <form id="uploadForm">
+      <input type="text" id="name" placeholder="Student Name" required>
+      <input type="text" id="roll" placeholder="Roll No" required>
+      <input type="number" id="totalMarks" placeholder="Total Marks" required>
+      <input type="number" id="obtainedMarks" placeholder="Obtained Marks" required>
+      <input type="text" id="month" placeholder="Month (e.g., January)" required>
+      <button type="submit">Upload Marks</button>
+    </form>
+  </div>
+
+  <div class="container" id="markList"></div>
+
+  <script>
+    const API_URL = "https://class-6th-student-data-science.onrender.com";
+
+    async function loadMarks() {
+      const res = await fetch(`${API_URL}/marks`);
+      const data = await res.json();
+      const list = document.getElementById("markList");
+      list.innerHTML = "<h3>All Uploaded Marks</h3>";
+      data.forEach(m => {
+        const div = document.createElement("div");
+        div.style.margin = "10px";
+        div.style.padding = "10px";
+        div.style.border = "1px solid gray";
+        div.innerHTML = `
+          <b>${m.name}</b> (${m.roll}) - ${m.obtainedMarks}/${m.totalMarks} marks (${m.month})
+          <button onclick="editMark('${m._id}', ${m.obtainedMarks})">✏️ Edit</button>
+          <button onclick="deleteMark('${m._id}')">🗑️ Delete</button>
+        `;
+        list.appendChild(div);
+      });
+    }
+
+    document.getElementById("uploadForm").addEventListener("submit", async e => {
+      e.preventDefault();
+      const data = {
+        name: document.getElementById("name").value,
+        roll: document.getElementById("roll").value,
+        totalMarks: parseInt(document.getElementById("totalMarks").value),
+        obtainedMarks: parseInt(document.getElementById("obtainedMarks").value),
+        month: document.getElementById("month").value
+      };
+      await fetch(`${API_URL}/upload`, {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify(data)
+      });
+      alert("Marks uploaded successfully!");
+      e.target.reset();
+      loadMarks();
+    });
+
+    async function editMark(id, currentMarks) {
+      const newMarks = prompt(`Edit obtained marks:`, currentMarks);
+      if (newMarks === null) return;
+      await fetch(`${API_URL}/marks/${id}`, {
+        method: "PUT",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({ obtainedMarks: parseInt(newMarks) })
+      });
+      loadMarks();
+    }
+
+    async function deleteMark(id) {
+      if (!confirm("Delete this record?")) return;
+      await fetch(`${API_URL}/marks/${id}`, { method: "DELETE" });
+      loadMarks();
+    }
+
+    loadMarks();
+  </script>
+</body>
+</html>
