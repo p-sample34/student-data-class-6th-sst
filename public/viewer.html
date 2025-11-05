@@ -11,103 +11,119 @@
   <script src="https://cdnjs.cloudflare.com/ajax/libs/jspdf/2.5.1/jspdf.umd.min.js"></script>
 
   <style>
+  body {
+    font-family: "Poppins", sans-serif;
+    background: linear-gradient(to right, #101820, #1c1f24);
+    color: white;
+    margin: 0;
+    padding: 15px;
+  }
+
+  h1 {
+    text-align: center;
+    color: #ffb400;
+    margin-bottom: 20px;
+    font-size: 1.6rem;
+  }
+
+  .container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 15px;
+    max-width: 1200px;
+    margin: auto;
+  }
+
+  .chart-container {
+    flex: 2;
+    width: 100%;
+    min-height: 300px;
+    background: #1a1a1a;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(255, 180, 0, 0.3);
+  }
+
+  .chart-container canvas {
+    width: 100% !important;
+    height: 100% !important;
+  }
+
+  .rank-container {
+    width: 100%;
+    background: #222;
+    padding: 15px;
+    border-radius: 12px;
+    box-shadow: 0 0 10px rgba(255, 180, 0, 0.2);
+    max-height: 350px;
+    overflow-y: auto;
+  }
+
+  .rank-container h3 {
+    text-align: center;
+    color: #ffb400;
+    margin-bottom: 10px;
+  }
+
+  ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+  }
+
+  li {
+    padding: 8px;
+    font-size: 0.95rem;
+    border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+  }
+
+  li:last-child {
+    border-bottom: none;
+  }
+
+  .download-btn {
+    display: block;
+    margin: 18px auto;
+    padding: 12px 22px;
+    background: #ffb400;
+    color: #000;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: 0.3s;
+  }
+
+  .download-btn:hover {
+    background: #ffcc33;
+  }
+
+  /* ✅ Mobile Optimization */
+  @media (max-width: 600px) {
     body {
-      font-family: "Poppins", sans-serif;
-      background: linear-gradient(to right, #101820, #1c1f24);
-      color: white;
-      margin: 0;
-      padding: 20px;
+      padding: 10px;
     }
 
     h1 {
-      text-align: center;
-      color: #ffb400;
-      margin-bottom: 20px;
-    }
-
-    .container {
-      display: flex;
-      justify-content: center;
-      align-items: flex-start;
-      flex-wrap: wrap;
-      gap: 20px;
-      max-width: 1200px;
-      margin: auto;
-    }
-
-    .chart-container {
-      flex: 2;
-      min-width: 300px;
-      background: #1a1a1a;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(255, 180, 0, 0.3);
-      height: 400px;
-    }
-
-    .rank-container {
-      flex: 1;
-      min-width: 250px;
-      background: #222;
-      padding: 20px;
-      border-radius: 15px;
-      box-shadow: 0 0 10px rgba(255, 180, 0, 0.2);
-      max-height: 500px;
-      overflow-y: auto;
-    }
-
-    .rank-container h3 {
-      text-align: center;
-      color: #ffb400;
-    }
-
-    ul {
-      list-style: none;
-      padding: 0;
+      font-size: 1.4rem;
     }
 
     li {
-      padding: 8px;
-      border-bottom: 1px solid rgba(255, 255, 255, 0.1);
-    }
-
-    li:last-child {
-      border-bottom: none;
+      font-size: 0.85rem;
+      padding: 6px;
     }
 
     .download-btn {
-      display: block;
-      margin: 25px auto;
-      padding: 12px 25px;
-      background: #ffb400;
-      color: #000;
-      border: none;
-      border-radius: 8px;
-      font-weight: bold;
-      cursor: pointer;
-      transition: 0.3s;
+      width: 100%;
     }
 
-    .download-btn:hover {
-      background: #ffcc33;
-      transform: scale(1.05);
+    .chart-container {
+      min-height: 250px;
     }
-
-    @media (max-width: 768px) {
-      .container {
-        flex-direction: column;
-        align-items: center;
-      }
-
-      .chart-container, .rank-container {
-        width: 90%;
-      }
-
-      .chart-container {
-        height: 300px;
-      }
-    }
-  </style>
+  }
+</style>
 </head>
 
 <body>
@@ -194,4 +210,5 @@
   </script>
 </body>
 </html>
+
 
